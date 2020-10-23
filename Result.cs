@@ -10,29 +10,25 @@
     public static class Result {
         public static Result<T> Ok<T>(T value) {
             Result<T> r;
-#if DEBUG || !SCELLECS_RESULT_DISABLE_CHECKS
+            
             r.check   = false;
             r.isError = false;
-#else
-            r.IsError = false;
-#endif
             r.errorCode    = default;
             r.errorMessage = default;
             r.value        = value;
+            
             return r;
         }
 
         public static Result<T> Error<T>(int errorCode, string errorMessage) {
             Result<T> r;
-#if DEBUG || !SCELLECS_RESULT_DISABLE_CHECKS
+            
             r.check   = false;
             r.isError = true;
-#else
-            r.IsError = true;
-#endif
             r.value        = default;
             r.errorMessage = errorMessage;
             r.errorCode    = errorCode;
+            
             return r;
         }
     }
@@ -42,7 +38,6 @@
     [Il2CppSetOption(Option.DivideByZeroChecks, false)]
     [StructLayout(LayoutKind.Sequential)]
     public ref struct Result<T> {
-#if DEBUG || !SCELLECS_RESULT_DISABLE_CHECKS
         public bool IsError {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get {
@@ -53,16 +48,12 @@
 
         internal bool check;
         internal bool isError;
-#else
-        public   bool IsError;
-#endif
         internal T      value;
         internal int    errorCode;
         internal string errorMessage;
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public T TryGet() {
-#if DEBUG || !SCELLECS_RESULT_DISABLE_CHECKS
             if (this.check == false) {
                 throw new NoCheckIsErrorException();
             }
@@ -72,13 +63,11 @@
             }
 
             this.check = false;
-#endif
             return this.value;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Error TryGetError() {
-#if DEBUG || !SCELLECS_RESULT_DISABLE_CHECKS
             if (this.check == false) {
                 throw new NoCheckIsErrorException();
             }
@@ -88,7 +77,6 @@
             }
 
             this.check = false;
-#endif
 
             Error error;
             error.code    = this.errorCode;
