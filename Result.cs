@@ -10,25 +10,25 @@
     public static class Result {
         public static Result<T> Ok<T>(T value) {
             Result<T> r;
-            
-            r.check   = false;
-            r.isError = false;
+
+            r.check        = false;
+            r.isError      = false;
+            r.value        = value;
             r.errorCode    = default;
             r.errorMessage = default;
-            r.value        = value;
-            
+
             return r;
         }
 
         public static Result<T> Error<T>(int errorCode, string errorMessage) {
             Result<T> r;
-            
-            r.check   = false;
-            r.isError = true;
+
+            r.check        = false;
+            r.isError      = true;
             r.value        = default;
             r.errorMessage = errorMessage;
             r.errorCode    = errorCode;
-            
+
             return r;
         }
     }
@@ -46,8 +46,8 @@
             }
         }
 
-        internal bool check;
-        internal bool isError;
+        internal bool   check;
+        internal bool   isError;
         internal T      value;
         internal int    errorCode;
         internal string errorMessage;
@@ -92,7 +92,7 @@
     public ref struct Error {
         public int    code;
         public string message;
-        
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public ErrorException AsException() => new ErrorException(this.code, this.message);
     }
