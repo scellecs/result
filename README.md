@@ -21,10 +21,10 @@ using Scellecs;
 
 public Result<int> ValidateSomeInt(int someArg) {
     if (someArg < 0) {
-        return Result.Error<int>(0, "someArg is less than zero");
+        return Result.Error<int>(errorCode: 0, errorMessage: "someArg is less than zero");
     }
     else if (someArg == 0) {
-        return Result.Error<int>(1, "someArg is zero");
+        return Result.Error<int>(errorCode: 1, errorMessage: "someArg is zero");
     }
     else {
         return Result.Ok(someArg);
@@ -59,9 +59,11 @@ public void Foo() {
         var error = result.TryGetError();
         if (error.code == 0) {
             //handle error
+            Debug.LogError(error.message);
         }
         else if (error.code == 1) {
             //handle error
+            Debug.LogError(error.message);
         }
     }
     else {

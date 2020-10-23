@@ -64,7 +64,7 @@
         public T TryGet() {
 #if DEBUG || !SCELLECS_RESULT_DISABLE_CHECKS
             if (this.check == false) {
-                throw new NoCheckHasValueException();
+                throw new NoCheckIsErrorException();
             }
 
             if (this.isError == true) {
@@ -80,7 +80,7 @@
         public Error TryGetError() {
 #if DEBUG || !SCELLECS_RESULT_DISABLE_CHECKS
             if (this.check == false) {
-                throw new NoCheckHasValueException();
+                throw new NoCheckIsErrorException();
             }
 
             if (this.isError == false) {
@@ -112,8 +112,8 @@
     [Il2CppSetOption(Option.NullChecks, false)]
     [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     [Il2CppSetOption(Option.DivideByZeroChecks, false)]
-    public sealed class NoCheckHasValueException : Exception {
-        public NoCheckHasValueException() : base("Check IsError property before TryGet.") {
+    public sealed class NoCheckIsErrorException : Exception {
+        public NoCheckIsErrorException() : base("Check IsError property before TryGet.") {
         }
     }
 
